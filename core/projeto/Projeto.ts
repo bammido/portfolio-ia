@@ -1,15 +1,13 @@
-import Tecnologia from "../tecnologia/Tecnologia";
-import {NivelKeys} from "./Nivel";
-import {TipoKeys} from "./Tipo";
+import Tecnologia from "../tecnologia/Tecnologia"
 
 export default interface Projeto {
-    id: number
-    nome: String
-    descricao: String
-    imagens: String[]
-    nivel: NivelKeys
-    tipo: TipoKeys
-    destaque: Boolean 
-    repositorio: String
-    tecnologias: Tecnologia[]
+	id: number
+	nome: String
+	descricao: String
+	imagens: String[]
+	nivel: number
+	tipo: string
+	destaque: Boolean
+	repositorio: String
+	tecnologias?: Tecnologia[]
 }
