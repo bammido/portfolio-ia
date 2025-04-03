@@ -1,7 +1,7 @@
 # portfolio-IA
 
 <div align="center">
-     <img src="./.gitassets/portfolio-ia-print.png">
+    <img src="https://raw.githubusercontent.com/bammido/portfolio-ia/main/.gitassets/portfolio-ia-print.png">
     <div>
         <img src="https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white">
         <img src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white">
@@ -19,7 +19,7 @@ Aplicação interativa que exibe meus projetos e experiência profissional, ofer
 A arquitetura do projeto é baseada no n8n, uma ferramenta de automação que gerencia o fluxo de dados entre o Supabase (onde armazeno minhas informações) e o ChatGPT.
 
 <div align="center">
-    <img src="./.gitassets/portfolio-ia-n8n-flow.png">
+    <img src="https://raw.githubusercontent.com/bammido/portfolio-ia/main/.gitassets/portfolio-ia-n8n-flow.png">
 </div>
 
 ## 🛠️ Features
