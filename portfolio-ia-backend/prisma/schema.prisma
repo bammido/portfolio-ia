@@ -9,32 +9,57 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl      = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Tecnologia {
-  id Int @id @default(autoincrement())
-  nome String
-  descricao String
-  imagem String
-  destaque Boolean @default(false)
-  projetos Projeto[]
+  id          Int           @id @default(autoincrement())
+  nome        String
+  descricao   String
+  imagem      String
+  destaque    Boolean       @default(false)
+  projetos    Projeto[]
+  Experiencia Experiencia[]
 
   @@map("tecnologias")
 }
 
 model Projeto {
-  id Int @id @default(autoincrement())
-  nome String
-  descricao String
-  imagens String[]
-  nivel Int
-  tipo String
-  destaque Boolean @default(false)
+  id          Int          @id @default(autoincrement())
+  nome        String
+  descricao   String
+  imagens     String[]
+  nivel       Int
+  tipo        String
+  destaque    Boolean      @default(false)
   repositorio String
   tecnologias Tecnologia[]
 
   @@map("projetos")
+}
+
+model Experiencia {
+  id               Int          @id @default(autoincrement())
+  nome             String
+  descricao        String
+  tecnologias      Tecnologia[]
+  destaque         Boolean      @default(false)
+  urlsRelacionadas String[]
+  dataInicio       DateTime
+  dataFim          DateTime?
+  empresa          String
+
+  @@map("experiencias")
+}
+
+model Contato {
+  id       Int     @id @default(autoincrement())
+  celular  String
+  email    String
+  linkedin String?
+  github   String?
+
+  @@map("contatos")
 }
