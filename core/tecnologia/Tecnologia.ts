@@ -4,7 +4,7 @@ export default interface Tecnologia {
 	id: number
 	nome: string
 	descricao: string
-	imagem: String
+	imagem: string
 	destaque: Boolean
 	projetos?: Projeto[]
 }

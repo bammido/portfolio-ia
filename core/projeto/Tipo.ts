@@ -1,8 +1,9 @@
 const Tipo = {
-    web: 'web',
-    mobile: 'mobile'
+	web: "web",
+	mobile: "mobile",
 } as const
 
-type TipoKeys = typeof Tipo[keyof typeof Tipo]
+type TipoKeys = (typeof Tipo)[keyof typeof Tipo]
 
-export {Tipo, TipoKeys}
+export { Tipo }
+export type { TipoKeys }

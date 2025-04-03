@@ -2,12 +2,12 @@ import Tecnologia from "../tecnologia/Tecnologia"
 
 export default interface Projeto {
 	id: number
-	nome: String
-	descricao: String
-	imagens: String[]
+	nome: string
+	descricao: string
+	imagens: string[]
 	nivel: number
 	tipo: string
 	destaque: Boolean
-	repositorio: String
+	repositorio: string
 	tecnologias?: Tecnologia[]
 }
