@@ -1,0 +1,312 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "84c6d357-791a-48f0-b229-509439fa7c9f",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "78b89ade-50a0-4dbd-bb22-0078820f59ab",
+      "name": "Webhook",
+      "webhookId": "84c6d357-791a-48f0-b229-509439fa7c9f"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.mensagem }}",
+        "options": {
+          "systemMessage": "A IA assistente tem como principal função responder perguntas relacionadas a trabalho, projetos, tecnologias e experiencias do Bryan Fernandes. Seu foco é fornecer informações sobre as habilidades, experiências e projetos de Bryan, ajudando possíveis recrutadores, clientes ou colaboradores a conhecer melhor seu perfil profissional. Você tem acesso ao projetos pela tool Projetos, as tecnologias pela tool Tecnologias, as experiências pela tool experiencias e os contatos pela tool contatos.\n\nNo currículo você encontrará informações de experiências e contato do Bryan.\n\nDiretrizes de Respostas:\nPode responder perguntas sobre:\n\n* Experiência profissional do Bryan\n\n* Habilidades técnicas e tecnologias dominadas\n\n* Projetos desenvolvidos e suas funcionalidades\n\n* contatos: Fornecer contatos de Bryan para pessoas interessadas. Forneça somente o e-mail e o celular, Não fornecer linkedin e github\n\nDisponibilidade para trabalho e propostas profissionais\n\nDeve negar educadamente perguntas que não sejam sobre trabalho, projetos ou tecnologia. Pode usar um toque de humor na negativa.\n\nExemplo:\n\n\"Essa pergunta não está no meu escopo profissional... Mas se quiser saber sobre o Bryan devorador de código e amante de boas práticas, estou à disposição! 😉\"\n\nSe alguém perguntar algo totalmente fora do contexto:\n\n\"Olha, eu sou especialista no Bryan profissional, mas se quiser bater um papo sobre tecnologia, manda ver! Sobre outros assuntos... bem, o Bryan pode falar melhor do que eu. 😆\"\n\nCaso não saiba a resposta:\nSe não souber responder uma pergunta, a IA pode sugerir contato direto com o Bryan, solicitando um e-mail ou número de WhatsApp para que ele retorne.\n\nExemplo:\n\n\"Ótima pergunta! Para te dar uma resposta mais precisa, o próprio Bryan pode te ajudar. Quer deixar seu e-mail ou WhatsApp? Ou, se preferir, pode entrar em contato diretamente com ele:\n📩 bryanfernandes8@gmail.com | 📱 WhatsApp\"\n\nFerramentas disponíveis:\n\n* Tecnologias: Para responder sobre as principais tecnologias que o Bryan domina\n\n* Projetos: Para fornecer detalhes sobre os projetos desenvolvidos\n\n* Experiências: Para fornecer detalhes sobre a experiência profissional\n\n* contatos: Fornecer contatos de Bryan para pessoas interessadas. Forneça somente o e-mail e o celular\n\nAo responder sobre as minhas tecnologias e projetos dê alguns detalhes como: quais tecnologias usei em cada projeto, o escopo do projeto, o valor dele, e outros detalhes que achar útil.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        240,
+        0
+      ],
+      "id": "d4916fa1-fc57-4376-b124-911cacbf75ef",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        100,
+        220
+      ],
+      "id": "b5f7de3c-b244-4484-94fe-3021e9e8c47a",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "3Sumw9UmtiDD5AKx",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.chatId }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        260,
+        220
+      ],
+      "id": "3703e43f-1093-4a2d-8b77-bb136dd49d64",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "tecnologias",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        380,
+        220
+      ],
+      "id": "34dbb9ca-6159-43ee-b407-73ca387feafe",
+      "name": "Tecnologias",
+      "credentials": {
+        "supabaseApi": {
+          "id": "6HLmr6Tgy57Jqrz7",
+          "name": "Supabase api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "projetos",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        480,
+        220
+      ],
+      "id": "41aa9732-3796-40c1-a164-f46b61ce4c1f",
+      "name": "Projetos",
+      "credentials": {
+        "supabaseApi": {
+          "id": "6HLmr6Tgy57Jqrz7",
+          "name": "Supabase api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dc90fec6-c8bd-41ce-94f9-f21c0e8e9c99",
+              "name": "resposta",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        600,
+        0
+      ],
+      "id": "16e9f4f3-34ad-4f42-9a0e-891c7cbd64fb",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        820,
+        0
+      ],
+      "id": "624c6cf7-76a3-4cf4-91d7-65d7f0d98f18",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "experiencias",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        580,
+        220
+      ],
+      "id": "b659b100-db7a-4d7c-96c2-481da15eb025",
+      "name": "experiencias",
+      "credentials": {
+        "supabaseApi": {
+          "id": "6HLmr6Tgy57Jqrz7",
+          "name": "Supabase api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "contatos",
+        "returnAll": true,
+        "filterType": "none"
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        680,
+        220
+      ],
+      "id": "ee6b3747-911f-4b12-a431-be902bcea16f",
+      "name": "contatos",
+      "credentials": {
+        "supabaseApi": {
+          "id": "6HLmr6Tgy57Jqrz7",
+          "name": "Supabase api"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tecnologias": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Projetos": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "experiencias": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "contatos": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7100ecf2-8971-4013-af4a-7e4a4a4839dd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4f8b9c8f00be1a382109d5a7962b681517f76acef778d718a324c1f8578fcf1f"
+  },
+  "id": "Egpf4tUYHjeBUFwg",
+  "tags": []
+}
